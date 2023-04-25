@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+/* TopNav */
+
+.topNav {
+    height: 72px;
+    width: 100%;
+    background-color: #3B245A;
+}
+
+.navBar {
+    height: 72px;
+}
+
+.navLogo {
+    Height: 72px;
+    padding-top: 16px;
+    padding-left: 24px;
+}
+
+.navLinks {
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.navLink {
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 32px 0px;
+    position: absolute;
+    height: 72px;
+    top: 0px;
+    cursor: pointer;
+    font-family: 'Raleway';
+    font-weight: 580;
+    font-size: 20px;
+    border-bottom: 4px solid #ffffff00;
+}
+
+.navLink:hover {
+    border-bottom: 4px solid #FFFFFF;
+    transition: 0.3s;
+}
+.navLink:active {
+    color: #c0bebe;
+    border-bottom: 4px solid #c0bebe;
+    transition: 0.2s;
+}
+.navLink:tar{
+    border-bottom: 4px solid #FFFFFF;
+}
+
+.navProfile {
+    padding-top: 15px;
+}
+
+.align-right {
+    width: 45%;
+    float: right;
+}
+
+.navProfile-img {
+    width: 40px;
+    height: 40px;
+    background: gray;
+    border-radius: 100%;
+    float: left;
+    margin-right: 10px;
+}
+
+.navProfile-username {
+    width: 100%;
+    color: #ffffff;
+    font-size: 19px;
+    padding-top: 3px;
+    cursor: pointer;
+}
+
+.dropdownIcon {
+    position: relative;
+    bottom: 2px;
+    height: 35px;
+    width: 35px;
+    right: 10px;
+}
+
+@media screen and (max-width: 1400px) {
+    .align-right {
+        width: 100%;
+        float: right;
+        position: relative;
+        left: 100px;
+    }
+}
+
+@media screen and (max-width: 1330px) {
+    .align-right {
+        width: 90%;
+        float: right;
+        position: relative;
+        left: 0px;
+    }
+}
+@media screen and (max-width: 1170px) {
+    .align-right {
+        width: 100%;
+        float: right;
+    }
+}
+@media screen and (max-width: 1070px) {
+    .align-right {
+        width: 110%;
+        float: right;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .align-right {
+        width: 110%;
+        float: right;
+    }
+}
+@media screen and (max-width: 992px) {
+    .align-right {
+        width: 55%;
+        float: right;
+    }
+}
+@media screen and (max-width: 910px) {
+    .align-right {
+        width: 60%;
+        float: right;
+    }
+}
+@media screen and (max-width: 850px) {
+    .align-right {
+        width: 70%;
+        float: right;
+    }
+}
+@media screen and (max-width: 760px) {
+    .align-right {
+        width: 100%;
+        float: right;
+    }
+}
+@media screen and (max-width: 710px) {
+    .align-right {
+        width: 110%;
+        float: right;
+    }
+}
+@media screen and (max-width: 660px) {
+    .align-right {
+        width: 120%;
+        float: right;
+    }
+}
+@media screen and (max-width: 610px) {
+    .align-right {
+        width: 130%;
+        float: right;
+    }
+}
