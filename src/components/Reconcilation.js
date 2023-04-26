@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Row } from 'react-bootstrap'
-import "./../pages/recon.css";
+import "./recon.css";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaSort } from "react-icons/fa";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from '@mui/material';
@@ -10,11 +10,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.action.hover,
         color: theme.palette.common.black,
-        height:40,
+        height: 40,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
-        height:56,
+        height: 56,
     },
 }));
 
@@ -32,37 +32,37 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Reconcilation() {
     const datas = [
         {
-            id:"R001",
+            id: "R001",
             name: "Payroll Disperency Report",
             createdOn: "June 26, 2020 10:03 PM"
         },
         {
-            id:"R002",
+            id: "R002",
             name: "Transaction Reconcilation Log",
             createdOn: "July 2, 2020 1:04 PM"
         },
         {
-            id:"R003",
+            id: "R003",
             name: "Expense Dispute Tracker",
             createdOn: "July 5, 2020 09:17 AM"
         },
         {
-            id:"R004",
+            id: "R004",
             name: "Payment Disrepancy Log",
             createdOn: "July 10, 2020 10:22 AM"
         },
         {
-            id:"R005",
+            id: "R005",
             name: "Invoice Disperancy Report",
             createdOn: "July 10, 2020 10:22 AM"
         }
     ]
 
-    const navigate =useNavigate()
+    const navigate = useNavigate()
 
- const handleClick = ()=>{
-    navigate('/comparisionpage')
- }
+    const handleClick = () => {
+        navigate('/comparisionpage')
+    }
 
 
     return (
@@ -83,9 +83,9 @@ function Reconcilation() {
                     <Table>
                         <TableHead>
                             <TableRow className='table-row'>
-                                <StyledTableCell>ID <FaSort className='sort-icon'/></StyledTableCell>
-                                <StyledTableCell>NAME <FaSort className='sort-icon'/></StyledTableCell>
-                                <StyledTableCell>CREATED ON <FaSort className='sort-icon'/></StyledTableCell>
+                                <StyledTableCell>ID <FaSort className='sort-icon' /></StyledTableCell>
+                                <StyledTableCell>NAME <FaSort className='sort-icon' /></StyledTableCell>
+                                <StyledTableCell>CREATED ON <FaSort className='sort-icon' /></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
