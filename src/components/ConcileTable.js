@@ -10,7 +10,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         height: 40,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+        fontSize: 14,   
         height: 56,
     },
 }));
@@ -26,7 +26,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-function ConcileTable({ csvValues }) {
+function ConcileTable({ csvValues, csvTargetValues }) {
+    // let csvNestedValues = csvValues;
+    // let test = [...csvValues];
+    // let csvNestatedData = csvNestedValues.find(data => {
+    //     return data.employeeName;
+    // })
+    // let finaldata = csvNestedValues.filter(data => {
+    //     return data.employeeName === csvNestatedData.employeeName;
+    // })
+    // test.push(finaldata).toString();
+    // console.log(test);
+
     return (
         <Row>
             <Col xs={6} lg={6} md={6} sm={6}>
@@ -45,15 +56,15 @@ function ConcileTable({ csvValues }) {
                         </TableHead>
                         <TableBody>
                             {csvValues.map(csvData => (
-                                <StyledTableRow key={csvData.id}>
-                                    <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{csvData.id}</StyledTableCell>
-                                    <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{csvData.employeeName}</StyledTableCell>
-                                    <StyledTableCell>{csvData.assignment}</StyledTableCell>
-                                    <StyledTableCell>{csvData.payPeriod}</StyledTableCell>
-                                    <StyledTableCell>{csvData.rate}</StyledTableCell>
-                                    <StyledTableCell>{csvData.hours}</StyledTableCell>
-                                    <StyledTableCell>{csvData.grossPay}</StyledTableCell>
-                                </StyledTableRow>
+                                    <StyledTableRow key={csvData.id}>
+                                        <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{csvData.id}</StyledTableCell>
+                                        <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{csvData.employeeName}</StyledTableCell>
+                                        <StyledTableCell>{csvData.assignment}</StyledTableCell>
+                                        <StyledTableCell>{csvData.payPeriod}</StyledTableCell>
+                                        <StyledTableCell>{csvData.rate}</StyledTableCell>
+                                        <StyledTableCell>{csvData.hours}</StyledTableCell>
+                                        <StyledTableCell>{csvData.grossPay}</StyledTableCell>
+                                    </StyledTableRow>
                             ))}
 
                         </TableBody>
@@ -65,21 +76,27 @@ function ConcileTable({ csvValues }) {
                     <Table className='reconcile-table'>
                         <TableHead>
                             <TableRow >
-                                <StyledTableCell>ID</StyledTableCell>
-                                <StyledTableCell>EMPLOYEE NAME</StyledTableCell>
+                                <StyledTableCell style={{ position: "sticky", left: 0, background: "#f5f5f5" }}>ID</StyledTableCell>
+                                <StyledTableCell style={{ position: "sticky", left: 48, background: "#f5f5f5" }}>EMPLOYEE NAME</StyledTableCell>
                                 <StyledTableCell>ASSIGNMENT</StyledTableCell>
                                 <StyledTableCell>PAY PERIOD</StyledTableCell>
                                 <StyledTableCell>RATE</StyledTableCell>
+                                <StyledTableCell>HOURS</StyledTableCell>
+                                <StyledTableCell>GROSS PAY</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <StyledTableRow>
-                                <StyledTableCell></StyledTableCell>
-                                <StyledTableCell></StyledTableCell>
-                                <StyledTableCell></StyledTableCell>
-                                <StyledTableCell></StyledTableCell>
-                                <StyledTableCell></StyledTableCell>
-                            </StyledTableRow>
+                            {csvTargetValues.map(targetData => (
+                                <StyledTableRow key={targetData.id}>
+                                    <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{targetData.id}</StyledTableCell>
+                                    <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{targetData.employeeName}</StyledTableCell>
+                                    <StyledTableCell>{targetData.assignment}</StyledTableCell>
+                                    <StyledTableCell>{targetData.payPeriod}</StyledTableCell>
+                                    <StyledTableCell>{targetData.rate}</StyledTableCell>
+                                    <StyledTableCell>{targetData.hours}</StyledTableCell>
+                                    <StyledTableCell>{targetData.grossPay}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
