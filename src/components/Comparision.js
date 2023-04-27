@@ -26,7 +26,17 @@ function Comparision() {
         results.data.map(data => (
           csvDataValues.push((data))
         ))
-        setcsvSourceData(csvDataValues);
+        const groupedData = csvDataValues.reduce((acc, curr)=>{
+          const {employeeName, ...rest} = curr;
+          const employeeIndex = acc.findIndex(item => item.employeeName === employeeName);
+          if(employeeIndex === -1){
+            acc.push({employeeName, assignments: [{...rest}]})
+          }else{
+            acc[employeeIndex].assignments.push({...rest});
+          }
+          return acc
+        },[]);
+        setcsvSourceData(groupedData);
         setReconcileSourceUploaded(true);
       }
     })
@@ -44,14 +54,36 @@ function Comparision() {
         results.data.map(data => (
           csvTargetValues.push((data))
         ))
-        setcsvTargetData(csvTargetValues)
+        const groupedTargetData = csvTargetValues.reduce((acc, curr)=>{
+          const {employeeName, ...rest} = curr;
+          const employeeIndex = acc.findIndex(item => item.employeeName === employeeName);
+          if(employeeIndex === -1){
+            acc.push({employeeName, assignments: [{...rest}]})
+          }else{
+            acc[employeeIndex].assignments.push({...rest});
+          }
+          return acc
+        },[]);
+        setcsvTargetData(groupedTargetData)
         setReconcileTargetUploaded(true);
       }
     })
   }
+  console.log(csvSourceData);
+  console.log("Tar",csvTargetData);
+
+
+  if(csvSourceData.length === csvTargetData.length){
+    console.log("it is equal");
+  }else if(csvSourceData.length !== csvTargetData.length){
+    console.log("The number of rows in the two files is different");
+  }
+
+
+
+
   
   const [showReconcile, setShowReconcile] = useState((reconcileSourceUploaded && reconcileTargetUploaded) ? true : false);
-  console.log(csvSourceData);
   return (
     <Container fluid>
       <Row>

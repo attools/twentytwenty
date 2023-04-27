@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col } from 'react-bootstrap';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from '@mui/material';
 import { FaSort } from "react-icons/fa";
@@ -10,7 +10,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         height: 40,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,   
+        fontSize: 14,
         height: 56,
     },
 }));
@@ -27,6 +27,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 function ConcileTable({ csvValues, csvTargetValues }) {
+
+    const [showGroupedData, setShowGroupedData] = useState(false);
     // let csvNestedValues = csvValues;
     // let test = [...csvValues];
     // let csvNestatedData = csvNestedValues.find(data => {
@@ -55,16 +57,37 @@ function ConcileTable({ csvValues, csvTargetValues }) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {csvValues.map(csvData => (
-                                    <StyledTableRow key={csvData.id}>
-                                        <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{csvData.id}</StyledTableCell>
-                                        <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{csvData.employeeName}</StyledTableCell>
-                                        <StyledTableCell>{csvData.assignment}</StyledTableCell>
-                                        <StyledTableCell>{csvData.payPeriod}</StyledTableCell>
-                                        <StyledTableCell>{csvData.rate}</StyledTableCell>
-                                        <StyledTableCell>{csvData.hours}</StyledTableCell>
-                                        <StyledTableCell>{csvData.grossPay}</StyledTableCell>
-                                    </StyledTableRow>
+                            {csvValues.map(csvData => (<>
+                                <StyledTableRow key={csvData.id}>
+                                    <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{csvData.id}</StyledTableCell>
+                                    <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{csvData.employeeName}</StyledTableCell>
+                                    <StyledTableCell>{csvData.assignments.length} assignments</StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    {showGroupedData ? (
+                                        <button onClick={() => setShowGroupedData(false)} className='btn-plus'></button>
+                                    ) : (
+                                        <button onClick={() => setShowGroupedData(true)}></button>
+                                    )
+                                    }
+
+                                </StyledTableRow>
+                                {showGroupedData &&
+                                    csvData.assignments.map(assign => (
+                                        <StyledTableRow>
+                                            <StyledTableCell></StyledTableCell>
+                                            <StyledTableCell>{csvData.employeeName}</StyledTableCell>
+                                            <StyledTableCell>{assign.assignment}</StyledTableCell>
+                                            <StyledTableCell>{assign.payPeriod}</StyledTableCell>
+                                            <StyledTableCell>{assign.rate}</StyledTableCell>
+                                            <StyledTableCell>{assign.hours}</StyledTableCell>
+                                            <StyledTableCell>{assign.grossPay}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))
+                                }
+                            </>
                             ))}
 
                         </TableBody>
@@ -86,16 +109,37 @@ function ConcileTable({ csvValues, csvTargetValues }) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {csvTargetValues.map(targetData => (
-                                <StyledTableRow key={targetData.id}>
-                                    <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{targetData.id}</StyledTableCell>
-                                    <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{targetData.employeeName}</StyledTableCell>
-                                    <StyledTableCell>{targetData.assignment}</StyledTableCell>
-                                    <StyledTableCell>{targetData.payPeriod}</StyledTableCell>
-                                    <StyledTableCell>{targetData.rate}</StyledTableCell>
-                                    <StyledTableCell>{targetData.hours}</StyledTableCell>
-                                    <StyledTableCell>{targetData.grossPay}</StyledTableCell>
+                        {csvTargetValues.map(csvData => (<>
+                                <StyledTableRow key={csvData.id}>
+                                    <StyledTableCell style={{ position: "sticky", left: 0, backgroundColor: "white" }}>{csvData.id}</StyledTableCell>
+                                    <StyledTableCell style={{ position: "sticky", left: 48, backgroundColor: "white" }}>{csvData.employeeName}</StyledTableCell>
+                                    <StyledTableCell>{csvData.assignments.length} assignments</StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    <StyledTableCell></StyledTableCell>
+                                    {showGroupedData ? (
+                                        <button onClick={() => setShowGroupedData(false)} className='btn-plus'></button>
+                                    ) : (
+                                        <button onClick={() => setShowGroupedData(true)}></button>
+                                    )
+                                    }
+
                                 </StyledTableRow>
+                                {showGroupedData &&
+                                    csvData.assignments.map(assign => (
+                                        <StyledTableRow>
+                                            <StyledTableCell></StyledTableCell>
+                                            <StyledTableCell>{csvData.employeeName}</StyledTableCell>
+                                            <StyledTableCell>{assign.assignment}</StyledTableCell>
+                                            <StyledTableCell>{assign.payPeriod}</StyledTableCell>
+                                            <StyledTableCell>{assign.rate}</StyledTableCell>
+                                            <StyledTableCell>{assign.hours}</StyledTableCell>
+                                            <StyledTableCell>{assign.grossPay}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))
+                                }
+                            </>
                             ))}
                         </TableBody>
                     </Table>

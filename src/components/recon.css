@@ -148,3 +148,17 @@
 .css-11xur9t-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar {
     display: none;
 }
+.btn-plus{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px;
+    gap: 8px;
+    width: 17px;
+    height: 17px;
+    margin-top: 12px;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+}
