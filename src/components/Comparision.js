@@ -1,8 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 import { VscChecklist } from "react-icons/vsc";
 import ConcileTable from './ConcileTable';
 import Papa from "papaparse";
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+
+
 
 function Comparision() {
 
@@ -12,7 +16,10 @@ function Comparision() {
   const [csvSourceData, setcsvSourceData] = useState([]);
   const [csvTargetData, setcsvTargetData] = useState([]);
   const [reconcileSourceUploaded, setReconcileSourceUploaded] = useState(false)
-  const [reconcileTargetUploaded, setReconcileTargetUploaded] = useState(false)
+  const [reconcileTargetUploaded, setReconcileTargetUploaded] = useState(false);
+  const [classs, setClasss] = useState()
+  const [open,setOpen]= useState(false);
+
 
   const sourceUploadHandler = (e) => {
     let sourceFileNameValue = e.target.files[0].name;
@@ -72,20 +79,63 @@ function Comparision() {
   console.log(csvSourceData);
   console.log("Tar",csvTargetData);
 
-
-  if(csvSourceData.length === csvTargetData.length){
-    console.log("it is equal");
-  }else if(csvSourceData.length !== csvTargetData.length){
-    console.log("The number of rows in the two files is different");
+const errormessage =()=>{
+  if(csvSourceData.length !== csvTargetData.length){
+    setOpen(true)
   }
 
+}
+useEffect(()=>{
+  errormessage()
+},[csvSourceData,csvTargetData])
+const handleClose = () => {
+  setOpen(false);
+};
 
 
-
+  const compareCsvData = ()=>{
+    const newRowClasses = [];
+    if (csvSourceData.length === csvTargetData.length) {
+      for (let i = 0; i < csvSourceData.length; i++) {
+        if (csvSourceData[i].employeeName !== csvTargetData[i].employeeName) {
+          console.log(`Employee name does not match for row ${i}`);
+          newRowClasses[i]= "red-Color"
+        }
+        if (csvSourceData[i].assignments.length !== csvTargetData[i].assignments.length) {
+          console.log(`Number of assignments does not match for row ${i}`);
+          newRowClasses[i]= "red-Color"
+        } else {
+          for (let j = 0; j < csvSourceData[i].assignments.length; j++) {
+            if (csvSourceData[i].assignments[j].name !== csvTargetData[i].assignments[j].name) {
+              console.log(`Assignment name does not match for row ${i}, assignment ${j}`);
+              newRowClasses[i]= "red-Color"
+            }
+            if (csvSourceData[i].assignments[j].grossPay !== csvTargetData[i].assignments[j].grossPay) {
+              console.log(`Assignment grosspay does not match for row ${i}, assignment ${j}`);
+              newRowClasses[i]= "red-Color"
+            }
+            // Add more property comparisons as needed
+          }
+        }
+      }
+      setClasss(newRowClasses)
+    } else {
+      console.log("The number of rows in the two files is different");
+    }
+  }
   
+  useEffect(()=>{
+    compareCsvData();
+  },[csvSourceData,csvTargetData])
+
   const [showReconcile, setShowReconcile] = useState((reconcileSourceUploaded && reconcileTargetUploaded) ? true : false);
   return (
     <Container fluid>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          The row of the files are not matching
+        </MuiAlert>
+          </Snackbar>
       <Row>
         <Col xs={12} lg={6} sm={12} md={12}>
           <div className='csv-card'>
@@ -155,7 +205,7 @@ function Comparision() {
       </Row>
       {
         showReconcile && (
-          <ConcileTable csvValues={csvSourceData} csvTargetValues={csvTargetData} />
+          <ConcileTable csvValues={csvSourceData} csvTargetValues={csvTargetData} classs={classs}/>
         )
       }
 
