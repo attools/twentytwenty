@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 import { VscChecklist } from "react-icons/vsc";
 import ConcileTable from './ConcileTable';
@@ -18,7 +18,7 @@ function Comparision() {
   const [reconcileSourceUploaded, setReconcileSourceUploaded] = useState(false)
   const [reconcileTargetUploaded, setReconcileTargetUploaded] = useState(false);
   const [classs, setClasss] = useState()
-  const [open,setOpen]= useState(false);
+  const [open, setOpen] = useState(false);
 
 
   const sourceUploadHandler = (e) => {
@@ -33,21 +33,25 @@ function Comparision() {
         results.data.map(data => (
           csvDataValues.push((data))
         ))
-        const groupedData = csvDataValues.reduce((acc, curr)=>{
-          const {employeeName, ...rest} = curr;
+        const groupedData = csvDataValues.reduce((acc, curr) => {
+          const { employeeName, ...rest } = curr;
           const employeeIndex = acc.findIndex(item => item.employeeName === employeeName);
-          if(employeeIndex === -1){
-            acc.push({employeeName, assignments: [{...rest}]})
-          }else{
-            acc[employeeIndex].assignments.push({...rest});
+          if (employeeIndex === -1) {
+            acc.push({ employeeName, assignments: [{ ...rest }] })
+          } else {
+            acc[employeeIndex].assignments.push({ ...rest });
           }
           return acc
-        },[]);
+        }, []);
         setcsvSourceData(groupedData);
         setReconcileSourceUploaded(true);
       }
     })
   }
+  const handleCsvValuesUpdate = (newCsvValues) => {
+    setcsvSourceData(newCsvValues)
+}
+
 
   const targetUploadHandler = (e) => {
     let targetFileNameValue = e.target.files[0].name;
@@ -61,58 +65,58 @@ function Comparision() {
         results.data.map(data => (
           csvTargetValues.push((data))
         ))
-        const groupedTargetData = csvTargetValues.reduce((acc, curr)=>{
-          const {employeeName, ...rest} = curr;
+        const groupedTargetData = csvTargetValues.reduce((acc, curr) => {
+          const { employeeName, ...rest } = curr;
           const employeeIndex = acc.findIndex(item => item.employeeName === employeeName);
-          if(employeeIndex === -1){
-            acc.push({employeeName, assignments: [{...rest}]})
-          }else{
-            acc[employeeIndex].assignments.push({...rest});
+          if (employeeIndex === -1) {
+            acc.push({ employeeName, assignments: [{ ...rest }] })
+          } else {
+            acc[employeeIndex].assignments.push({ ...rest });
           }
           return acc
-        },[]);
+        }, []);
         setcsvTargetData(groupedTargetData)
         setReconcileTargetUploaded(true);
       }
     })
   }
   console.log(csvSourceData);
-  console.log("Tar",csvTargetData);
+  console.log("Tar", csvTargetData);
 
-const errormessage =()=>{
-  if(csvSourceData.length !== csvTargetData.length){
-    setOpen(true)
+  const errormessage = () => {
+    if (csvSourceData.length !== csvTargetData.length) {
+      setOpen(true)
+    }
+
   }
-
-}
-useEffect(()=>{
-  errormessage()
-},[csvSourceData,csvTargetData])
-const handleClose = () => {
-  setOpen(false);
-};
+  useEffect(() => {
+    errormessage()
+  }, [csvSourceData, csvTargetData])
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
-  const compareCsvData = ()=>{
+  const compareCsvData = () => {
     const newRowClasses = [];
     if (csvSourceData.length === csvTargetData.length) {
       for (let i = 0; i < csvSourceData.length; i++) {
         if (csvSourceData[i].employeeName !== csvTargetData[i].employeeName) {
           console.log(`Employee name does not match for row ${i}`);
-          newRowClasses[i]= "red-Color"
+          newRowClasses[i] = "red-Color"
         }
         if (csvSourceData[i].assignments.length !== csvTargetData[i].assignments.length) {
           console.log(`Number of assignments does not match for row ${i}`);
-          newRowClasses[i]= "red-Color"
+          newRowClasses[i] = "red-Color"
         } else {
           for (let j = 0; j < csvSourceData[i].assignments.length; j++) {
             if (csvSourceData[i].assignments[j].name !== csvTargetData[i].assignments[j].name) {
               console.log(`Assignment name does not match for row ${i}, assignment ${j}`);
-              newRowClasses[i]= "red-Color"
+              newRowClasses[i] = "red-Color"
             }
             if (csvSourceData[i].assignments[j].grossPay !== csvTargetData[i].assignments[j].grossPay) {
               console.log(`Assignment grosspay does not match for row ${i}, assignment ${j}`);
-              newRowClasses[i]= "red-Color"
+              newRowClasses[i] = "red-Color"
             }
             // Add more property comparisons as needed
           }
@@ -123,19 +127,21 @@ const handleClose = () => {
       console.log("The number of rows in the two files is different");
     }
   }
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     compareCsvData();
-  },[csvSourceData,csvTargetData])
+  }, [csvSourceData, csvTargetData])
 
   const [showReconcile, setShowReconcile] = useState((reconcileSourceUploaded && reconcileTargetUploaded) ? true : false);
   return (
     <Container fluid>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+      {csvSourceData===null && csvTargetData === null ? null :
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           The row of the files are not matching
         </MuiAlert>
-          </Snackbar>
+      </Snackbar>}
+
       <Row>
         <Col xs={12} lg={6} sm={12} md={12}>
           <div className='csv-card'>
@@ -205,7 +211,7 @@ const handleClose = () => {
       </Row>
       {
         showReconcile && (
-          <ConcileTable csvValues={csvSourceData} csvTargetValues={csvTargetData} classs={classs}/>
+          <ConcileTable csvValues={csvSourceData} csvTargetValues={csvTargetData} classs={classs} onUpdateCsvValues={handleCsvValuesUpdate} />
         )
       }
 

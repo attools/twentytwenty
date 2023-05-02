@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from '@mui/material';
-import { FaSort } from "react-icons/fa";
+import { AiOutlineMinus } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -26,10 +28,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-function ConcileTable({ csvValues, csvTargetValues, classs }) {
+function ConcileTable({ csvValues, csvTargetValues, onUpdateCsvValues }) {
 
     const [showGroupedData, setShowGroupedData] = useState(false);
     const [clas, setClas] = useState();
+
 
 
 
@@ -88,6 +91,7 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                 <StyledTableCell>RATE</StyledTableCell>
                                 <StyledTableCell>HOURS</StyledTableCell>
                                 <StyledTableCell>GROSS PAY</StyledTableCell>
+                                <StyledTableCell></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -101,9 +105,9 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                     <StyledTableCell></StyledTableCell>
                                     <StyledTableCell></StyledTableCell>
                                     {showGroupedData ? (
-                                        <button onClick={() => setShowGroupedData(false)} className='btn-plus'></button>
+                                        <StyledTableCell><button onClick={() => setShowGroupedData(false)} className='btn-plus'><AiOutlineMinus/></button></StyledTableCell>
                                     ) : (
-                                        <button onClick={() => setShowGroupedData(true)} className='btn-plus'></button>
+                                        <StyledTableCell><button onClick={() => setShowGroupedData(true)} className='btn-minus'><AiOutlinePlus/></button></StyledTableCell>
                                     )
                                     }
 
@@ -112,10 +116,18 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                     csvData.assignments.map((assign, index) => {
                                         let rowClass = ''; // Initialize row class
                                         let i
+                                        let fixbutton = null;
                                         for (i = 0; i < csvValues.length; i++) {
                                             if (csvTargetValues[i].assignments[index]) { // Check if target value exists for this assignment
                                                 if (assign.grossPay !== csvTargetValues[i].assignments[index].grossPay) {
                                                     rowClass = 'red-Color'; // Add class if gross pay does not match
+                                                    fixbutton = <button className='fix-button' onClick={() => {
+                                                        const newCsvValues = [...csvValues]; // Create a copy of csvValues
+                                                        const newGrossPay = csvTargetValues[i].assignments[index].grossPay
+                                                        newCsvValues[i].assignments[index].grossPay = newGrossPay; // Update the Gross Pay value in the copy
+                                                        onUpdateCsvValues(newCsvValues);}}>
+                                                        <AiOutlineCheck/> Fix
+                                                        </button>
                                                 }
                                                 // Add more property comparisons as needed
 
@@ -128,6 +140,7 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                                         <StyledTableCell>{assign.rate}</StyledTableCell>
                                                         <StyledTableCell>{assign.hours}</StyledTableCell>
                                                         <StyledTableCell>{assign.grossPay}</StyledTableCell>
+                                                         <StyledTableCell>{fixbutton}</StyledTableCell>
                                                     </StyledTableRow>
                                                 );
                                             } else {
@@ -155,6 +168,7 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                 <StyledTableCell>RATE</StyledTableCell>
                                 <StyledTableCell>HOURS</StyledTableCell>
                                 <StyledTableCell>GROSS PAY</StyledTableCell>
+                                <StyledTableCell></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -168,9 +182,9 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                     <StyledTableCell></StyledTableCell>
                                     <StyledTableCell></StyledTableCell>
                                     {showGroupedData ? (
-                                        <button onClick={() => setShowGroupedData(false)} className='btn-plus'></button>
+                                       <StyledTableCell><button onClick={() => setShowGroupedData(false)} className='btn-plus'><AiOutlineMinus/></button></StyledTableCell>
                                     ) : (
-                                        <button onClick={() => setShowGroupedData(true)}></button>
+                                        <StyledTableCell><button onClick={() => setShowGroupedData(true)} className='btn-minus'><AiOutlinePlus/></button></StyledTableCell>
                                     )
                                     }
 
@@ -179,12 +193,17 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                     csvData.assignments.map((assign, index) => {
                                         let rowClass = ''; // Initialize row class
                                         let i
+                                        let fixbutton = null;
                                         for (i = 0; i < csvTargetValues.length; i++) {
                                             if (csvValues[i].assignments[index]) { // Check if target value exists for this assignment
-                                                if (assign.name !== csvValues[i].assignments[index].name) {
-                                                    rowClass = 'red-Color'; // Add class if assignment name does not match
-                                                } else if (assign.grossPay !== csvValues[i].assignments[index].grossPay) {
+                                                if (assign.grossPay !== csvValues[i].assignments[index].grossPay) {
                                                     rowClass = 'red-Color'; // Add class if gross pay does not match
+                                                    fixbutton = <button className='fix-button' 
+                                                    onClick={() => {
+                                                        const newCsvValues = [...csvValues]; // Create a copy of csvValues
+                                                        const newGrossPay = csvTargetValues[i].assignments[index].grossPay
+                                                        newCsvValues[i].assignments[index].grossPay = newGrossPay; // Update the Gross Pay value in the copy
+                                                        onUpdateCsvValues(newCsvValues);}}><AiOutlineCheck/> Fix</button>
                                                 }
                                                 // Add more property comparisons as needed
 
@@ -197,6 +216,7 @@ function ConcileTable({ csvValues, csvTargetValues, classs }) {
                                                         <StyledTableCell>{assign.rate}</StyledTableCell>
                                                         <StyledTableCell>{assign.hours}</StyledTableCell>
                                                         <StyledTableCell>{assign.grossPay}</StyledTableCell>
+                                                        <StyledTableCell>{fixbutton}</StyledTableCell>
                                                     </StyledTableRow>
                                                 );
                                             } else {

@@ -148,7 +148,8 @@
 .css-11xur9t-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar {
     display: none;
 }
-.btn-plus{
+
+.btn-plus {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -162,6 +163,37 @@
     border: 1px solid #EEEEEE;
     border-radius: 5px;
 }
-.red-Color{
+
+.btn-minus {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px;
+    gap: 8px;
+    width: 17px;
+    height: 17px;
+    margin-top: 12px;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+}
+
+.red-Color {
     background: rgba(255, 0, 0, 0.08);
+}
+
+.fix-button {
+    background: #3B245A;
+    border-radius: 4px;
+    border: none;
+    align-items: center;
+    padding: 2px 6px;
+    width: 47px;
+    height: 23px;
+    color: white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
 }
